@@ -13,6 +13,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
@@ -24,7 +25,12 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.beleningalina.jetpackcomposepoc.ui.theme.JetpackComposePOCTheme
 import kotlinx.coroutines.delay
@@ -276,4 +282,53 @@ fun Counter(modifier: Modifier = Modifier) {
             Text("+")
         }
     }
+}
+
+@Composable
+fun Counter(modifier: Modifier = Modifier) {
+    val counter = remember { mutableStateOf(0) }
+    val message = remember { mutableStateOf("") }
+
+    LaunchedEffect(counter.value) {
+        delay(3000)
+        message.value = "Counter changed to ${counter.value}"
+    }
+
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text("${counter.value}")
+        Button(onClick = { counter.value++}) {
+            Text("+")
+        }
+        Text(message.value)
+    }
+}
+
+@Composable
+fun Counter(
+    modifier: Modifier = Modifier,
+    lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
+    ) {
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            Log.d("Welcome message", "Lifecycle event: $event")
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+        Log.d("Welcome message", "Observer registered")
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            Log.d("Welcome message", "Observer unregistered")
+        }
+    }
+
+    Text(
+        modifier = modifier.fillMaxSize(),
+        textAlign = TextAlign.Center,
+        text = "Welcome to app"
+    )
 }
