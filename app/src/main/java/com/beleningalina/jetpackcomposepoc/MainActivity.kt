@@ -12,6 +12,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.beleningalina.jetpackcomposepoc.ui.theme.JetpackComposePOCTheme
@@ -43,7 +44,7 @@ class MainActivity : ComponentActivity() {
  * Not every variable is State.
  * Use State (read-only) or MutableState (mutable) to update the UI.
  */
-@Composable
+/*@Composable
 fun Counter(modifier: Modifier = Modifier) {
     var counter: Int = 0
     Column(
@@ -55,6 +56,30 @@ fun Counter(modifier: Modifier = Modifier) {
         Button(
             onClick = {
                 counter++
+            }
+        ) {
+            Text("+")
+        }
+    }
+}*/
+
+/**
+ * This counter does NOT work as expected.
+ *
+ * A mutableState variable needs to be created using remember
+ */
+@Composable
+fun Counter(modifier: Modifier = Modifier) {
+    var counter = mutableStateOf(0)
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text("$counter")
+        Button(
+            onClick = {
+                counter.value++
             }
         ) {
             Text("+")
