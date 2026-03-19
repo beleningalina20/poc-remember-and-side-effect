@@ -1,40 +1,15 @@
 package com.beleningalina.jetpackcomposepoc
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.beleningalina.jetpackcomposepoc.ui.navigation.AppScreen
+import com.beleningalina.jetpackcomposepoc.ui.navigation.addFeedScreenGraph
 import com.beleningalina.jetpackcomposepoc.ui.theme.JetpackComposePOCTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,98 +17,19 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             JetpackComposePOCTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Counter(modifier = Modifier.padding(innerPadding))
-
-                }
+                NavigationHost()
             }
         }
     }
 }
 
-
-/**
- * This counter does NOT work as expected.
- *
- * - `counter` is a regular Int variable, not a State
- * - Updating a normal variable does not trigger recomposition
- * - Jetpack Compose only observes State changes
- * - As a result, the UI never updates
- *
- * Not every variable is State.
- * Use State (read-only) or MutableState (mutable) to update the UI.
- */
-/*@Composable
-fun Counter(modifier: Modifier = Modifier) {
-    var counter: Int = 0
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text("$counter")
-        Button(
-            onClick = {
-                counter++
-            }
-        ) {
-            Text("+")
-        }
+@Composable
+fun NavigationHost() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = AppScreen.Main.route) {
+        addFeedScreenGraph(navController)
     }
-}*/
-
-/**
- * This counter does NOT work as expected.
- *
- * A mutableState variable needs to be created using remember
- *
- * Without remember, the counter would reset on every recomposition
- */
-/*@Composable
-fun Counter(modifier: Modifier = Modifier) {
-    val counter = mutableStateOf(0)
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text("$counter.value")
-        Button(
-            onClick = {
-                counter.value++
-            }
-        ) {
-            Text("+")
-        }
-    }
-}*/
-
-/**
- * remember
- *
- * - remember keeps the state alive during recompositions
- * - mutableStateOf triggers recomposition when the value changes
- * - does not survive configuration changes
- *
- * */
-/*@Composable
-fun Counter(modifier: Modifier = Modifier) {
-    val counter = remember { mutableStateOf(0) }
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text("${counter.value}")
-        Button(
-            onClick = {
-                counter.value++
-            }
-        ) {
-            Text("+")
-        }
-    }
-}*/
+}
 
 /**
  * rememberSaveable
@@ -209,7 +105,7 @@ fun Counter(
  *
  * */
 
-@Composable
+/*@Composable
 fun Counter(modifier: Modifier = Modifier) {
     val counter = rememberSaveable { mutableStateOf(0) }
     val scope = rememberCoroutineScope()
@@ -331,4 +227,4 @@ fun Counter(
         textAlign = TextAlign.Center,
         text = "Welcome to app"
     )
-}
+}*/
