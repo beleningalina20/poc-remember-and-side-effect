@@ -1,21 +1,17 @@
 package com.beleningalina.jetpackcomposepoc.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.beleningalina.jetpackcomposepoc.ui.components.CounterContent
 import com.beleningalina.jetpackcomposepoc.ui.components.InfoCard
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppScreen
 import com.beleningalina.jetpackcomposepoc.ui.theme.AppSpacing
@@ -39,7 +35,7 @@ fun CounterVariableScreen() {
 
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.onPrimary)
             .padding(AppSpacing.medium)
     ) {
         val (title, counterContent, infoCard) = createRefs()
@@ -60,26 +56,16 @@ fun CounterVariableScreen() {
                 }
         )
 
-        Column(
-            modifier = Modifier.fillMaxSize()
-                .constrainAs(counterContent) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text("$counter")
-            Button(
-                onClick = {
-                    counter++
-                }
-            ) {
-                Text("+")
-            }
-        }
+        CounterContent(
+            modifier = Modifier.constrainAs(counterContent) {
+                top.linkTo(parent.top)
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            counter = counter,
+            onIncrementCounter = { counter++}
+        )
 
         InfoCard(
             modifier = Modifier.constrainAs(infoCard) {
