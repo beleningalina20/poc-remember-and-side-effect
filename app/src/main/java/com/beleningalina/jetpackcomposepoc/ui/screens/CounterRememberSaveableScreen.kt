@@ -47,7 +47,7 @@ fun CounterRememberSaveableScreen() {
         val (title, counterContent, infoCard) = createRefs()
 
         Text(
-            text = AppScreen.CounterRemember.title,
+            text = AppScreen.CounterRememberScreen.title,
             style = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold

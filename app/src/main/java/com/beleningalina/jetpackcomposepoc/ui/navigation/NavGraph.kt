@@ -7,6 +7,7 @@ import com.beleningalina.jetpackcomposepoc.ui.screens.CounterRememberSaveableScr
 import com.beleningalina.jetpackcomposepoc.ui.screens.CounterRememberScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.CounterVariableScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.MainScreen
+import com.beleningalina.jetpackcomposepoc.ui.screens.profile.UserProfileScreen
 
 fun NavGraphBuilder.addFeedScreenGraph(navController: NavController) {
     composable(route = AppScreen.Main.route) {
@@ -17,15 +18,19 @@ fun NavGraphBuilder.addFeedScreenGraph(navController: NavController) {
         )
     }
 
-    composable(route = AppScreen.CounterVariable.route) {
+    composable(route = AppScreen.CounterVariableScreen.route) {
         CounterVariableScreen()
     }
 
-    composable(route = AppScreen.CounterRemember.route) {
+    composable(route = AppScreen.CounterRememberScreen.route) {
         CounterRememberScreen()
     }
 
-    composable(route = AppScreen.CounterRememberSaveable.route) {
+    composable(route = AppScreen.CounterRememberSaveableScreen.route) {
         CounterRememberSaveableScreen()
+    }
+
+    composable(route = AppScreen.UserProfileScreen.route) {
+        UserProfileScreen()
     }
 }

@@ -44,7 +44,7 @@ fun CounterVariableScreen() {
         val (title, counterContent, infoCard) = createRefs()
 
         Text(
-            text = AppScreen.CounterVariable.title,
+            text = AppScreen.CounterVariableScreen.title,
             style = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold
