@@ -10,6 +10,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -20,21 +23,18 @@ import com.beleningalina.jetpackcomposepoc.ui.navigation.AppScreen
 import com.beleningalina.jetpackcomposepoc.ui.theme.AppSpacing
 
 /**
- * This counter does NOT work as expected.
+ * This counter works correctly because it uses Compose State properly.
  *
- * - `counter` is a regular Int variable, not a State
- * - Updating a normal variable does not trigger recomposition
- * - Jetpack Compose only observes State changes
- * - As a result, the UI never updates
+ * - mutableStateOf: observable state (triggers recomposition and updates the UI automatically)
+ * - remember: keeps value across recompositions. Without it, the value would be recreated and reset on every recomposition.
  *
- * Not every variable is State.
- * Use State (read-only) or MutableState (mutable) to update the UI.
+ * Limitation: state is lost on configuration changes (e.g., screen rotation, process recreation).
+ * Recommended: rememberSaveable to persist state across configuration changes or ViewModel for proper lifecycle-aware state management.
  */
-
-
 @Composable
-fun CounterVariableScreen() {
-    var counter: Int = 0
+fun CounterRememberScreen() {
+    val counter: MutableState<Int> = remember { mutableStateOf(0) }
+    // var counter: Int by remember { mutableStateOf(0) } Using by operator. It is necessary import androidx.compose.runtime.getValue and androidx.compose.runtime.setValue
 
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
@@ -44,7 +44,7 @@ fun CounterVariableScreen() {
         val (title, counterContent, infoCard) = createRefs()
 
         Text(
-            text = AppScreen.CounterVariable.title,
+            text = AppScreen.CounterRemember.title,
             style = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold
@@ -71,9 +71,9 @@ fun CounterVariableScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("$counter")
+            Text("${counter.value}")
             Button(
-                onClick = { counter++ }
+                onClick = { counter.value++ }
             ) {
                 Text("+")
             }
@@ -85,13 +85,14 @@ fun CounterVariableScreen() {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             },
-            title = "Why isn't it updating?",
-            message = "This counter doesn’t update because it's not using State.",
+            title = "How state works in this counter?",
+            message = "The counter works because it uses Compose state and remember correctly.",
             points = listOf(
-                "Regular variables don’t trigger recomposition",
-                "Compose only reacts to State changes"
+                "mutableStateOf triggers recomposition",
+                "remember keeps value across recomposition",
+                "State is not saved on configuration changes (e.g: screen rotation)"
             ),
-            highlight = "Use remember { mutableStateOf(0) }"
+            highlight = "Use rememberSaveable or ViewModel for persistence"
         )
     }
 }

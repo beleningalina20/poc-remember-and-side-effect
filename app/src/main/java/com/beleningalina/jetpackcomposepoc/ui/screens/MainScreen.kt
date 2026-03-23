@@ -45,6 +45,7 @@ fun MainScreen(navigateTo: (String) -> Unit) {
                 ),
                 modifier = Modifier.fillMaxWidth()
                     .height(AppSpacing.extraLarge)
+                    .padding(vertical = AppSpacing.small)
             ) {
                 Text(
                     text = item.title,
