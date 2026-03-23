@@ -32,32 +32,6 @@ fun NavigationHost() {
 }
 
 /**
- * rememberSaveable
- *
- * - remember keeps the state alive during recompositions, it survives configuration changes
- * - mutableStateOf triggers recomposition when the value changes
- *
- * */
-/*@Composable
-fun Counter(modifier: Modifier = Modifier) {
-    val counter = rememberSaveable { mutableStateOf(0) }
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text("${counter.value}")
-        Button(
-            onClick = {
-                counter.value++
-            }
-        ) {
-            Text("+")
-        }
-    }
-}*/
-
-/**
  * Replacing rememberSaveable by viemodel
  *
  * rememberSaveable persists UI state using a Bundle, which is limited to primitive or parcelable types.
