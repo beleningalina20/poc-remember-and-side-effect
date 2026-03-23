@@ -4,17 +4,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.beleningalina.jetpackcomposepoc.ui.components.StateWarningCard
-import com.beleningalina.jetpackcomposepoc.ui.theme.Colors
+import com.beleningalina.jetpackcomposepoc.ui.components.InfoCard
+import com.beleningalina.jetpackcomposepoc.ui.navigation.AppScreen
+import com.beleningalina.jetpackcomposepoc.ui.theme.AppSpacing
 
 /**
  * This counter does NOT work as expected.
@@ -34,12 +38,27 @@ fun CounterVariableScreen() {
     var counter: Int = 0
 
     ConstraintLayout(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Colors.SurfaceWhite)
-            .padding(16.dp)
+        modifier = Modifier.fillMaxSize()
+            .background(Color.White)
+            .padding(AppSpacing.medium)
     ) {
-        val (counterContent, warningCard) = createRefs()
+        val (title, counterContent, infoCard) = createRefs()
+
+        Text(
+            text = AppScreen.CounterVariable.title,
+            style = MaterialTheme.typography.titleMedium.copy(
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.SemiBold
+            ),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
+                .padding(vertical = AppSpacing.large)
+                .constrainAs(title) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+        )
 
         Column(
             modifier = Modifier.fillMaxSize()
@@ -62,27 +81,19 @@ fun CounterVariableScreen() {
             }
         }
 
-        StateWarningCard(
-            modifier = Modifier.constrainAs(warningCard) {
+        InfoCard(
+            modifier = Modifier.constrainAs(infoCard) {
                 bottom.linkTo(parent.bottom)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             },
-            title ="Common Mistake: Why isn't it updating?",
-            description = "This counter does NOT work as expected because:",
-            reasons = listOf(
-                "Without *remember*, the variable is re-initialized every time the function runs",
-                "Recomposition executes the Composable function again from the top",
-                "The state is created fresh (0) on every cycle",
-                "The UI 'forgets' the previous value"
+            title = "Why isn't it updating?",
+            message = "This counter doesn’t update because it's not using State.",
+            points = listOf(
+                "Regular variables don’t trigger recomposition",
+                "Compose only reacts to State changes"
             ),
-            summary = "Solution: Use val counter = remember { mutableStateOf(0) }"
+            highlight = "Use remember { mutableStateOf(0) }"
         )
     }
-}
-
-@Composable
-@Preview
-fun CounterVariableScreenPreview() {
-    CounterVariableScreen()
 }

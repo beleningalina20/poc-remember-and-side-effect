@@ -1,82 +1,58 @@
 package com.beleningalina.jetpackcomposepoc.ui.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.beleningalina.jetpackcomposepoc.ui.navigation.AppDestination
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppScreen
-import com.beleningalina.jetpackcomposepoc.ui.theme.Colors
+import com.beleningalina.jetpackcomposepoc.ui.theme.AppSpacing
 
 @Composable
 fun MainScreen(navigateTo: (String) -> Unit) {
-    Column(
+    LazyColumn(
         modifier = Modifier.fillMaxSize()
-            .background(Colors.MutedTealBackground)
-            .padding(16.dp)
+            .padding(AppSpacing.small)
     ) {
-        Text(
-            text = "Remembers and Side Effects",
-            style = MaterialTheme.typography.titleLarge.copy(
-                color = Colors.TextOnTeal,
-                fontWeight = FontWeight.Bold
-            ),
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 24.dp)
-        )
+        item {
+            Text(
+                text = AppScreen.Main.title,
+                style = MaterialTheme.typography.headlineSmall.copy(
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.SemiBold
+                ),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+                    .padding(vertical = AppSpacing.large)
+            )
+        }
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            contentPadding = PaddingValues(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            items(AppScreen.screens) { item ->
-                Box(
-                    modifier = Modifier.background(Colors.LightTeal, RoundedCornerShape(10.dp))
-                        .padding(4.dp)
-                        .clickable {
-                             navigateTo(item.route)
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(item.title)
-
-                }
+        items(AppScreen.screens) { item ->
+            TextButton(
+                onClick = { navigateTo(item.route) },
+                shape = MaterialTheme.shapes.large,
+                colors = ButtonDefaults.textButtonColors(
+                    containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                ),
+                modifier = Modifier.fillMaxWidth()
+                    .height(AppSpacing.extraLarge)
+            ) {
+                Text(
+                    text = item.title,
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.SemiBold
+                    )
+                )
             }
         }
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun MainScreenPreview() {
-    MainScreen() {
-
     }
 }
