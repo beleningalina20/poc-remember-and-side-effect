@@ -1,13 +1,17 @@
 package com.beleningalina.jetpackcomposepoc.ui.navigation
 
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.beleningalina.jetpackcomposepoc.ui.screens.CounterRememberSaveableScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.CounterRememberScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.CounterVariableScreen
+import com.beleningalina.jetpackcomposepoc.ui.screens.CounterViewModel2Screen
+import com.beleningalina.jetpackcomposepoc.ui.screens.CounterViewModelScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.MainScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.profile.UserProfileScreen
+import com.beleningalina.jetpackcomposepoc.viewmodel.CounterViewModel2
 
 fun NavGraphBuilder.addFeedScreenGraph(navController: NavController) {
     composable(route = AppScreen.Main.route) {
@@ -32,5 +36,14 @@ fun NavGraphBuilder.addFeedScreenGraph(navController: NavController) {
 
     composable(route = AppScreen.UserProfileScreen.route) {
         UserProfileScreen()
+    }
+
+    composable(route = AppScreen.CounterViewModelScreen.route) {
+        CounterViewModelScreen()
+    }
+
+    composable(route = AppScreen.CounterViewModel2Screen.route) {  backStackEntry ->
+        val viewModel: CounterViewModel2 = viewModel(backStackEntry)
+        CounterViewModel2Screen(viewModel = viewModel)
     }
 }

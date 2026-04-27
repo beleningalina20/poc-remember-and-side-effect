@@ -32,47 +32,6 @@ fun NavigationHost() {
 }
 
 /**
- * Replacing rememberSaveable by viemodel
- *
- * rememberSaveable persists UI state using a Bundle, which is limited to primitive or parcelable types.
- * ViewModel avoids this limitation by keeping state in memory, making it a better choice for complex or long-lived state.
- *
- * */
-/*class CounterViewModel : ViewModel() {
-
-    private val _counter = mutableStateOf(0)
-    val counter: State<Int> = _counter
-
-    fun increment() {
-        _counter.value++
-    }
-}
-
-@Composable
-fun Counter(
-    modifier: Modifier = Modifier,
-    viewModel: CounterViewModel = viewModel()
-) {
-
-    val counter = viewModel.counter.value
-
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text("$counter")
-        Button(
-            onClick = {
-                viewModel.increment()
-            }
-        ) {
-            Text("+")
-        }
-    }
-}*/
-
-/**
  * rememberCoroutineScope
  *
  * Responsible for managing coroutines within composable. It provides a coroutineScope that’s intrinsically tied to the composable’s lifecycle
