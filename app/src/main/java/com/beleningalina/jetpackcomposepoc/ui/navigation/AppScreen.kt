@@ -1,5 +1,6 @@
 package com.beleningalina.jetpackcomposepoc.ui.navigation
 
+import com.beleningalina.jetpackcomposepoc.ui.navigation.AppDestination.COUNTER_REMEMBER_COROUTINE_SCOPE_ROUTE
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppDestination.COUNTER_REMEMBER_ROUTE
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppDestination.COUNTER_REMEMBER_SAVEABLE_ROUTE
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppDestination.COUNTER_VARIABLE_ROUTE
@@ -16,6 +17,7 @@ object AppDestination {
     const val USER_PROFILE_ROUTE = "user_profile"
     const val COUNTER_VIEW_MODEL_ROUTE = "counter_view_model"
     const val COUNTER_VIEW_MODEL_SAVED_STATE_HANDLE_ROUTE = "counter_view_model_saved_state_handle"
+    const val COUNTER_REMEMBER_COROUTINE_SCOPE_ROUTE = "counter_remember_coroutine_scope"
 }
 
 sealed class AppScreen(val title: String, val route: String) {
@@ -26,6 +28,7 @@ sealed class AppScreen(val title: String, val route: String) {
     object UserProfileScreen: AppScreen("User Profile: rememberSaveable + saver", USER_PROFILE_ROUTE)
     object CounterViewModelScreen: AppScreen("Counter using ViewModel", COUNTER_VIEW_MODEL_ROUTE)
     object CounterViewModel2Screen: AppScreen("Counter using ViewModel + savedStateHandle", COUNTER_VIEW_MODEL_SAVED_STATE_HANDLE_ROUTE)
+    object CounterRememberCoroutineScopeScreen: AppScreen("Counter: rememberCoroutineScope", COUNTER_REMEMBER_COROUTINE_SCOPE_ROUTE)
 
     companion object {
         val screens = listOf(
@@ -34,7 +37,8 @@ sealed class AppScreen(val title: String, val route: String) {
             CounterRememberSaveableScreen,
             UserProfileScreen,
             CounterViewModelScreen,
-            CounterViewModel2Screen
+            CounterViewModel2Screen,
+            CounterRememberCoroutineScopeScreen
         )
     }
 }

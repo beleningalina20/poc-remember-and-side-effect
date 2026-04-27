@@ -31,35 +31,7 @@ fun NavigationHost() {
     }
 }
 
-/**
- * rememberCoroutineScope
- *
- * Responsible for managing coroutines within composable. It provides a coroutineScope that’s intrinsically tied to the composable’s lifecycle
- *
- * */
-
-/*@Composable
-fun Counter(modifier: Modifier = Modifier) {
-    val counter = rememberSaveable { mutableStateOf(0) }
-    val scope = rememberCoroutineScope()
-
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text("${counter.value}")
-        Button(
-            onClick = {
-                scope.launch {
-                    delay(3000) // Simulate a delay
-                    counter.value++
-                }
-            }
-        ) {
-            Text("Increment after 3 seconds")
-        }
-    }
+/*
 MovieDetailScreen("") { }
 }
 

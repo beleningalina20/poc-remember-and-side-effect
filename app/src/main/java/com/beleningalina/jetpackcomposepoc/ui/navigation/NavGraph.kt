@@ -4,6 +4,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.beleningalina.jetpackcomposepoc.ui.screens.CounterRememberCoroutineScopeScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.CounterRememberSaveableScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.CounterRememberScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.CounterVariableScreen
@@ -45,5 +46,9 @@ fun NavGraphBuilder.addFeedScreenGraph(navController: NavController) {
     composable(route = AppScreen.CounterViewModel2Screen.route) {  backStackEntry ->
         val viewModel: CounterViewModel2 = viewModel(backStackEntry)
         CounterViewModel2Screen(viewModel = viewModel)
+    }
+
+    composable(route = AppScreen.CounterRememberCoroutineScopeScreen.route) {
+        CounterRememberCoroutineScopeScreen()
     }
 }
