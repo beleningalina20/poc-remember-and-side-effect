@@ -1,4 +1,4 @@
-package com.beleningalina.jetpackcomposepoc.ui.screens
+package com.beleningalina.jetpackcomposepoc.ui.screens.counter
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,20 +10,31 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.beleningalina.jetpackcomposepoc.ui.components.InfoCard
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppScreen
 import com.beleningalina.jetpackcomposepoc.ui.theme.AppSpacing
-import com.beleningalina.jetpackcomposepoc.viewmodel.CounterViewModel2
+
+/**
+ * This counter does NOT work as expected.
+ *
+ * - `counter` is a regular Int variable, not a State
+ * - Updating a normal variable does not trigger recomposition
+ * - Jetpack Compose only observes State changes
+ * - As a result, the UI never updates
+ *
+ * Not every variable is State.
+ * Use State (read-only) or MutableState (mutable) to update the UI.
+ */
+
 
 @Composable
-fun CounterViewModel2Screen(viewModel: CounterViewModel2 = viewModel()) {
-    val counter = viewModel.counter.collectAsState()
+fun CounterVariableScreen() {
+    var counter: Int = 0
 
     ConstraintLayout(
         modifier = Modifier.fillMaxSize()
@@ -33,7 +44,7 @@ fun CounterViewModel2Screen(viewModel: CounterViewModel2 = viewModel()) {
         val (title, counterContent, infoCard) = createRefs()
 
         Text(
-            text = AppScreen.CounterViewModel2Screen.title,
+            text = AppScreen.CounterVariableScreen.title,
             style = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold
@@ -60,18 +71,27 @@ fun CounterViewModel2Screen(viewModel: CounterViewModel2 = viewModel()) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("${counter.value}")
+            Text("$counter")
             Button(
-                onClick = { viewModel.increment() }
+                onClick = { counter++ }
             ) {
                 Text("+")
             }
         }
+
+        InfoCard(
+            modifier = Modifier.constrainAs(infoCard) {
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            title = "Why isn't it updating?",
+            message = "This counter doesn’t update because it's not using State.",
+            points = listOf(
+                "Regular variables don’t trigger recomposition",
+                "Compose only reacts to State changes"
+            ),
+            highlight = "Use remember { mutableStateOf(0) }"
+        )
     }
 }
-
-/*
-* El estado queda “pegado” al Composable
-No es testeable
-No es compartible
-* */
