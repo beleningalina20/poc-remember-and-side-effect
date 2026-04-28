@@ -12,6 +12,7 @@ import com.beleningalina.jetpackcomposepoc.ui.screens.counter.CounterViewModel2S
 import com.beleningalina.jetpackcomposepoc.ui.screens.counter.CounterViewModelScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.MainScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.profile.UserProfileScreen
+import com.beleningalina.jetpackcomposepoc.ui.screens.voiceRecorder.VoiceRecorderScreen
 import com.beleningalina.jetpackcomposepoc.viewmodel.CounterViewModel2
 
 fun NavGraphBuilder.addFeedScreenGraph(navController: NavController) {
@@ -50,5 +51,9 @@ fun NavGraphBuilder.addFeedScreenGraph(navController: NavController) {
 
     composable(route = AppScreen.CounterRememberCoroutineScopeScreen.route) {
         CounterRememberCoroutineScopeScreen()
+    }
+
+    composable(route = AppScreen.VoiceRecorderScreen.route) {
+        VoiceRecorderScreen()
     }
 }

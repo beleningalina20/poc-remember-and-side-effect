@@ -25,6 +25,7 @@ fun TextField(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
-        )
+        ),
+        singleLine = true
     )
 }
