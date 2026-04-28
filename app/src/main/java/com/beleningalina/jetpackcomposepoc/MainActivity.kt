@@ -60,7 +60,7 @@ fun MovieDetailScreen(
         currentOnPlayTrailer.value(currentMovieId.value)
     }
 }
-
+------------
 @Composable
 fun Counter(modifier: Modifier = Modifier) {
     val counter = remember { mutableStateOf(0) }
@@ -84,7 +84,7 @@ fun Counter(modifier: Modifier = Modifier) {
         }
     }
 }
-
+-------------------
 @Composable
 fun Counter(modifier: Modifier = Modifier) {
     val counter = remember { mutableStateOf(0) }
@@ -107,7 +107,7 @@ fun Counter(modifier: Modifier = Modifier) {
         Text(message.value)
     }
 }
-
+-----------------------
 @Composable
 fun Counter(
     modifier: Modifier = Modifier,
