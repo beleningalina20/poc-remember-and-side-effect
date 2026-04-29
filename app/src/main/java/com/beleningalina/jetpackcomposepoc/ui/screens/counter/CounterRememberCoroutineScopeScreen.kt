@@ -1,11 +1,13 @@
 package com.beleningalina.jetpackcomposepoc.ui.screens.counter
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,8 +18,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.constraintlayout.compose.ConstraintLayout
 import com.beleningalina.jetpackcomposepoc.ui.components.InfoCard
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppScreen
 import com.beleningalina.jetpackcomposepoc.ui.theme.AppSpacing
@@ -34,78 +34,68 @@ import kotlinx.coroutines.launch
  * Advantage: Automatic cancellation prevents memory leaks if the user navigates away.
  * Disadvantage: The running coroutine is lost on configuration changes (like rotation) because the scope is tied to the Composable's lifecycle.
  */
-
 @Composable
-fun CounterRememberCoroutineScopeScreen(modifier: Modifier = Modifier) {
+fun CounterRememberCoroutineScopeScreen() {
     val counter = rememberSaveable { mutableStateOf(0) }
     val isRunning = rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
-    ConstraintLayout(
-        modifier = Modifier.fillMaxSize()
-            .background(MaterialTheme.colorScheme.onPrimary)
-            .padding(AppSpacing.medium)
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val (title, content, infoCard) = createRefs()
-
         Text(
+            modifier = Modifier.padding(vertical = AppSpacing.medium),
             text = AppScreen.CounterRememberCoroutineScopeScreen.title,
             style = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold
-            ),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
-                .padding(vertical = AppSpacing.large)
-                .constrainAs(title) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
+            )
         )
 
         Column(
-            modifier = modifier.fillMaxSize()
-                .constrainAs(content) {
-                    top.linkTo(title.bottom)
-                    bottom.linkTo(infoCard.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-            },
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            modifier = Modifier.fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("${counter.value}")
-            Button(
-                onClick = {
-                    scope.launch {
-                        isRunning.value = true
-                        delay(3000) // Simulate a delay
-                        counter.value++
-                        isRunning.value = false
-                    }
-                },
-                enabled = !isRunning.value
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Text(if (isRunning.value) "Waiting..." else "Add +1 (3s delay)")
+                Text("${counter.value}")
+                Button(
+                    onClick = {
+                        scope.launch {
+                            isRunning.value = true
+                            delay(3000) // Simulate a delay
+                            counter.value++
+                            isRunning.value = false
+                        }
+                    },
+                    enabled = !isRunning.value
+                ) {
+                    Text(if (isRunning.value) "Waiting..." else "Add +1 (3s delay)")
+                }
             }
+
+            Spacer(
+                modifier = Modifier.height(AppSpacing.medium)
+                    .weight(1f)
+            )
+
+            InfoCard(
+                modifier = Modifier.padding(AppSpacing.small),
+                title = "How does rememberCoroutineScope work?",
+                message = "It provides a CoroutineScope bound to the Composable's lifecycle, ideal for event-driven tasks like button clicks.",
+                points = listOf(
+                    "Automatically cancelled when the Composable is removed from the UI",
+                    "Essential for calling 'suspend' functions (like delay or snackbars) from events",
+                    "Prevents memory leaks by cleaning up ongoing jobs automatically",
+                    "Loses its state and running coroutines on configuration changes (e.g., rotation)"
+                ),
+                highlight = "Use for UI-related jobs; prefer ViewModelScope for business logic."
+            )
         }
 
-        InfoCard(
-            modifier = Modifier.constrainAs(infoCard) {
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            title = "How does rememberCoroutineScope work?",
-            message = "It provides a CoroutineScope bound to the Composable's lifecycle, ideal for event-driven tasks like button clicks.",
-            points = listOf(
-                "Automatically cancelled when the Composable is removed from the UI",
-                "Essential for calling 'suspend' functions (like delay or snackbars) from events",
-                "Prevents memory leaks by cleaning up ongoing jobs automatically",
-                "Loses its state and running coroutines on configuration changes (e.g., rotation)"
-            ),
-            highlight = "Use for UI-related jobs; prefer ViewModelScope for business logic."
-        )
     }
 }

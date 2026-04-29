@@ -1,11 +1,14 @@
 package com.beleningalina.jetpackcomposepoc.ui.screens.voiceRecorder
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.constraintlayout.compose.ConstraintLayout
 import com.beleningalina.jetpackcomposepoc.ui.components.InfoCard
 import com.beleningalina.jetpackcomposepoc.ui.components.TextField
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppScreen
@@ -46,86 +48,74 @@ fun VoiceRecorderScreen() {
 
     val latestFileName = rememberUpdatedState(fileName.value)
 
-    ConstraintLayout(
-        modifier = Modifier.fillMaxSize()
-            .background(MaterialTheme.colorScheme.onPrimary)
-            .padding(AppSpacing.medium)
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val (title, content, infoCard) = createRefs()
-
         Text(
+            modifier = Modifier.padding(vertical = AppSpacing.medium),
             text = AppScreen.VoiceRecorderScreen.title,
             style = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold
-            ),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
-                .padding(vertical = AppSpacing.large)
-                .constrainAs(title) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
+            )
         )
 
         Column(
             modifier = Modifier.fillMaxSize()
-                .constrainAs(content) {
-                    top.linkTo(title.bottom)
-                    bottom.linkTo(infoCard.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-                .padding(AppSpacing.large),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TextField(
-                value = fileName.value,
-                onValueChange = { fileName.value = it },
-                label = "File title"
-            )
-
-            Button(
-                modifier = Modifier.padding(vertical = AppSpacing.large),
-                onClick = {
-                    scope.launch {
-                        isRecording.value = true
-                        recordingStatus.value = "🔴 Recording '${latestFileName.value}'..."
-                        delay(10000)
-                        recordingStatus.value = "'${latestFileName.value}' has been recorded"
-                        isRecording.value = false
-                    }
-                },
-                enabled = !isRecording.value
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Text("Record")
+                TextField(
+                    value = fileName.value,
+                    onValueChange = { fileName.value = it },
+                    label = "File title"
+                )
+
+                Button(
+                    modifier = Modifier.padding(vertical = AppSpacing.large),
+                    onClick = {
+                        scope.launch {
+                            isRecording.value = true
+                            recordingStatus.value = "🔴 Recording '${latestFileName.value}'..."
+                            delay(10000)
+                            recordingStatus.value = "'${latestFileName.value}' has been recorded"
+                            isRecording.value = false
+                        }
+                    },
+                    enabled = !isRecording.value
+                ) {
+                    Text("Record")
+                }
+
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = recordingStatus.value,
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center
+                )
             }
 
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = recordingStatus.value,
-                style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center
+            Spacer(
+                modifier = Modifier.height(AppSpacing.medium)
+                    .weight(1f)
+            )
+
+            InfoCard(
+                modifier = Modifier.padding(AppSpacing.small),
+                title = "What is rememberUpdatedState used for?",
+                message = "It keeps the latest value or lambda reference inside a long-lived effect.",
+                points = listOf(
+                    "No need to restart effects just because a value changed",
+                    "Allows long-running tasks to access the most current state",
+                    "Only updates the reference, not the effect itself"
+                ),
+                highlight = "Use it to prevent 'stale' data in long-lived coroutines."
             )
         }
-
-        InfoCard(
-            modifier = Modifier.constrainAs(infoCard) {
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            title = "What is rememberUpdatedState used for?",
-            message = "It keeps the latest value or lambda reference inside a long-lived effect (SideEffect) without restarting it.",
-            points = listOf(
-                "No need to restart effects just because a value changed",
-                "Allows long-running tasks to access the most current state",
-                "Only updates the reference, not the effect itself",
-                "Does not replace proper state management"
-            ),
-            highlight = "Use it to prevent 'stale' data in long-lived coroutines."
-        )
     }
 }

@@ -32,9 +32,7 @@ sealed class AppScreen(val title: String, val route: String) {
     object CounterRememberScreen: AppScreen("Counter: mutableState + remember", COUNTER_REMEMBER_ROUTE)
     object CounterRememberSaveableScreen: AppScreen("Counter: rememberSaveable", COUNTER_REMEMBER_SAVEABLE_ROUTE)
     object UserProfileScreen: AppScreen("User Profile: rememberSaveable + saver", USER_PROFILE_ROUTE)
-    object CounterViewModelScreen: AppScreen("Counter using ViewModel", COUNTER_VIEW_MODEL_ROUTE)
-    object CounterViewModel2Screen: AppScreen("Counter using ViewModel + savedStateHandle", COUNTER_VIEW_MODEL_SAVED_STATE_HANDLE_ROUTE)
-    object CounterRememberCoroutineScopeScreen: AppScreen("Counter: rememberCoroutineScope", COUNTER_REMEMBER_COROUTINE_SCOPE_ROUTE)
+   object CounterRememberCoroutineScopeScreen: AppScreen("Counter: rememberCoroutineScope", COUNTER_REMEMBER_COROUTINE_SCOPE_ROUTE)
     object VoiceRecorderScreen: AppScreen("Voice Recorder: rememberUpdatedState", VOICE_RECORDER_ROUTE)
     object ProductInfoScreen: AppScreen("Product info: SideEffect", PRODUCT_INFO_ROUTE)
     object UserBrowserScreen: AppScreen("User Browser: LaunchedEffect", USER_BROWSER_ROUTE)
@@ -45,8 +43,6 @@ sealed class AppScreen(val title: String, val route: String) {
             CounterRememberScreen,
             CounterRememberSaveableScreen,
             UserProfileScreen,
-            CounterViewModelScreen,
-            CounterViewModel2Screen,
             CounterRememberCoroutineScopeScreen,
             VoiceRecorderScreen,
             ProductInfoScreen,

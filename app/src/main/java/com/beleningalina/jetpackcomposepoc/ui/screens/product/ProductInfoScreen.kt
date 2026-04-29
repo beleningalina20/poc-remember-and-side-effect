@@ -1,10 +1,14 @@
+package com.beleningalina.jetpackcomposepoc.ui.screens.product
+
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -15,11 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.constraintlayout.compose.ConstraintLayout
 import com.beleningalina.jetpackcomposepoc.ui.components.InfoCard
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppScreen
-import com.beleningalina.jetpackcomposepoc.ui.screens.product.MockAnalytics
 import com.beleningalina.jetpackcomposepoc.ui.theme.AppSpacing
 
 /**
@@ -45,64 +46,54 @@ fun ProductInfoScreen() {
         Log.d("Performance", "✅ Render finalized for: $productName")
     }
 
-    ConstraintLayout(
-        modifier = Modifier.fillMaxSize()
-            .background(MaterialTheme.colorScheme.onPrimary)
-            .padding(AppSpacing.medium)
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val (title, content, infoCard) = createRefs()
-
         Text(
+            modifier = Modifier.padding(vertical = AppSpacing.medium),
             text = AppScreen.ProductInfoScreen.title,
             style = MaterialTheme.typography.titleMedium.copy(
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold
-            ),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
-                .padding(vertical = AppSpacing.large)
-                .constrainAs(title) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
+            )
         )
 
         Column(
             modifier = Modifier.fillMaxSize()
-                .constrainAs(content) {
-                    top.linkTo(title.bottom)
-                    bottom.linkTo(infoCard.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                }
-                .padding(AppSpacing.large),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = productName)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = productName)
 
-            Button(onClick = { productCount.value++ }) {
-                Text("Switch to Next Product")
+                Button(onClick = { productCount.value++ }) {
+                    Text("Switch to Next Product")
+                }
             }
+
+            Spacer(
+                modifier = Modifier.height(AppSpacing.medium)
+                    .weight(1f)
+            )
+
+            InfoCard(
+                modifier = Modifier.padding(AppSpacing.small),
+                title = "What is SideEffect used for?",
+                message = "It is used to run code whenever the Composable function is re-composed, ensuring it runs after a successful rendering.",
+                points = listOf(
+                    "Ideal for triggering logging or reporting analytics",
+                    "Useful for informing a non-Compose system that something changed",
+                    "Runs after every successful recomposition",
+                    "Does not support coroutines (non-suspending only)",
+                    "Not cancellable — it is a 'fire-and-forget' mechanism"
+                ),
+                highlight = "Use for lightweight UI-related actions; avoid heavy tasks or state modifications here."
+            )
         }
 
-        InfoCard(
-            modifier = Modifier.constrainAs(infoCard) {
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            title = "What is SideEffect used for?",
-            message = "It is used to run code whenever the Composable function is re-composed, ensuring it runs after a successful rendering.",
-            points = listOf(
-                "Ideal for triggering logging or reporting analytics",
-                "Useful for informing a non-Compose system that something changed",
-                "Runs after every successful recomposition",
-                "Does not support coroutines (non-suspending only)",
-                "Not cancellable — it is a 'fire-and-forget' mechanism"
-            ),
-            highlight = "Use for lightweight UI-related actions; avoid heavy tasks or state modifications here."
-        )
     }
 }
