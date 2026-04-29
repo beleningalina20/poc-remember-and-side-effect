@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.beleningalina.jetpackcomposepoc.ui.components.InfoCard
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppScreen
-import com.beleningalina.jetpackcomposepoc.ui.product.MockAnalytics
+import com.beleningalina.jetpackcomposepoc.ui.screens.product.MockAnalytics
 import com.beleningalina.jetpackcomposepoc.ui.theme.AppSpacing
 
 /**
@@ -50,7 +50,7 @@ fun ProductInfoScreen() {
             .background(MaterialTheme.colorScheme.onPrimary)
             .padding(AppSpacing.medium)
     ) {
-        val (title, productInfo, infoCard) = createRefs()
+        val (title, content, infoCard) = createRefs()
 
         Text(
             text = AppScreen.ProductInfoScreen.title,
@@ -70,7 +70,7 @@ fun ProductInfoScreen() {
 
         Column(
             modifier = Modifier.fillMaxSize()
-                .constrainAs(productInfo) {
+                .constrainAs(content) {
                     top.linkTo(title.bottom)
                     bottom.linkTo(infoCard.top)
                     start.linkTo(parent.start)
@@ -80,7 +80,7 @@ fun ProductInfoScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = productName, style = MaterialTheme.typography.bodyLarge)
+            Text(text = productName)
 
             Button(onClick = { productCount.value++ }) {
                 Text("Switch to Next Product")

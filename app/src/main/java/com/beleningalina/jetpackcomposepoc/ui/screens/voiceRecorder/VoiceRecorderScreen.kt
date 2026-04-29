@@ -51,7 +51,7 @@ fun VoiceRecorderScreen() {
             .background(MaterialTheme.colorScheme.onPrimary)
             .padding(AppSpacing.medium)
     ) {
-        val (title, voiceRecorderContent, infoCard) = createRefs()
+        val (title, content, infoCard) = createRefs()
 
         Text(
             text = AppScreen.VoiceRecorderScreen.title,
@@ -71,7 +71,7 @@ fun VoiceRecorderScreen() {
 
         Column(
             modifier = Modifier.fillMaxSize()
-                .constrainAs(voiceRecorderContent) {
+                .constrainAs(content) {
                     top.linkTo(title.bottom)
                     bottom.linkTo(infoCard.top)
                     start.linkTo(parent.start)

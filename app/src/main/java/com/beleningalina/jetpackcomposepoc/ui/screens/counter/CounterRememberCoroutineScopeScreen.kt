@@ -46,7 +46,7 @@ fun CounterRememberCoroutineScopeScreen(modifier: Modifier = Modifier) {
             .background(MaterialTheme.colorScheme.onPrimary)
             .padding(AppSpacing.medium)
     ) {
-        val (title, counterContent, infoCard) = createRefs()
+        val (title, content, infoCard) = createRefs()
 
         Text(
             text = AppScreen.CounterRememberCoroutineScopeScreen.title,
@@ -64,10 +64,9 @@ fun CounterRememberCoroutineScopeScreen(modifier: Modifier = Modifier) {
                 }
         )
 
-        // Composable reutilizable
         Column(
             modifier = modifier.fillMaxSize()
-                .constrainAs(counterContent) {
+                .constrainAs(content) {
                     top.linkTo(title.bottom)
                     bottom.linkTo(infoCard.top)
                     start.linkTo(parent.start)

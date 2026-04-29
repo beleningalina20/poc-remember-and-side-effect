@@ -5,7 +5,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.beleningalina.jetpackcomposepoc.ui.product.MockAnalytics
+import com.beleningalina.jetpackcomposepoc.ui.screens.browser.UserBrowserScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.counter.CounterRememberCoroutineScopeScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.counter.CounterRememberSaveableScreen
 import com.beleningalina.jetpackcomposepoc.ui.screens.counter.CounterRememberScreen
@@ -61,5 +61,9 @@ fun NavGraphBuilder.addFeedScreenGraph(navController: NavController) {
 
     composable(route = AppScreen.ProductInfoScreen.route) {
         ProductInfoScreen()
+    }
+
+    composable(route = AppScreen.UserBrowserScreen.route) {
+        UserBrowserScreen()
     }
 }

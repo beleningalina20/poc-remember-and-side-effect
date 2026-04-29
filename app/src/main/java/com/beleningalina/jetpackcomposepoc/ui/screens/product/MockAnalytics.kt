@@ -1,4 +1,4 @@
-package com.beleningalina.jetpackcomposepoc.ui.product
+package com.beleningalina.jetpackcomposepoc.ui.screens.product
 
 import android.util.Log
 

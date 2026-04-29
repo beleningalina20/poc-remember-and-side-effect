@@ -37,7 +37,7 @@ fun CounterViewModelScreen(viewModel: CounterViewModel = viewModel()) {
             .background(MaterialTheme.colorScheme.onPrimary)
             .padding(AppSpacing.medium)
     ) {
-        val (title, counterContent, infoCard) = createRefs()
+        val (title, content, infoCard) = createRefs()
 
         Text(
             text = AppScreen.CounterViewModelScreen.title,
@@ -55,10 +55,9 @@ fun CounterViewModelScreen(viewModel: CounterViewModel = viewModel()) {
                 }
         )
 
-        // Composable reutilizable
         Column(
             modifier = Modifier.fillMaxSize()
-                .constrainAs(counterContent) {
+                .constrainAs(content) {
                     top.linkTo(title.bottom)
                     bottom.linkTo(infoCard.top)
                     start.linkTo(parent.start)
@@ -76,11 +75,3 @@ fun CounterViewModelScreen(viewModel: CounterViewModel = viewModel()) {
         }
     }
 }
-
-
-// 📌 Problema:
-
-// Si giras la pantalla → OK (ViewModel lo mantiene)
-// Si Android mata el proceso → ❌ se reinicia a 0
-
-// Aquí el estado se puede restaurar incluso tras muerte del proceso

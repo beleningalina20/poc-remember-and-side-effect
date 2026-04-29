@@ -44,7 +44,7 @@ fun CounterRememberSaveableScreen() {
             .background(MaterialTheme.colorScheme.onPrimary)
             .padding(AppSpacing.medium)
     ) {
-        val (title, counterContent, infoCard) = createRefs()
+        val (title, content, infoCard) = createRefs()
 
         Text(
             text = AppScreen.CounterRememberScreen.title,
@@ -62,10 +62,9 @@ fun CounterRememberSaveableScreen() {
                 }
         )
 
-        // Composable reutilizable
         Column(
             modifier = Modifier.fillMaxSize()
-                .constrainAs(counterContent) {
+                .constrainAs(content) {
                     top.linkTo(title.bottom)
                     bottom.linkTo(infoCard.top)
                     start.linkTo(parent.start)

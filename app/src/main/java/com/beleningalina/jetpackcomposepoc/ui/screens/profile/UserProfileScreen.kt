@@ -35,7 +35,7 @@ fun UserProfileScreen() {
             .background(MaterialTheme.colorScheme.onPrimary)
             .padding(AppSpacing.medium)
     ) {
-        val (title, formContent, infoCard) = createRefs()
+        val (title, content, infoCard) = createRefs()
 
         Text(
             text = AppScreen.UserProfileScreen.title,
@@ -55,7 +55,7 @@ fun UserProfileScreen() {
 
         Column(
             modifier = Modifier.fillMaxWidth()
-                .constrainAs(formContent) {
+                .constrainAs(content) {
                     top.linkTo(title.bottom)
                     bottom.linkTo(infoCard.top)
                     start.linkTo(parent.start)

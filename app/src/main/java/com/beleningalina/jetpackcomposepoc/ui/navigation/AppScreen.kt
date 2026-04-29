@@ -8,6 +8,7 @@ import com.beleningalina.jetpackcomposepoc.ui.navigation.AppDestination.COUNTER_
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppDestination.COUNTER_VIEW_MODEL_SAVED_STATE_HANDLE_ROUTE
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppDestination.MAIN_SCREEN_ROUTE
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppDestination.PRODUCT_INFO_ROUTE
+import com.beleningalina.jetpackcomposepoc.ui.navigation.AppDestination.USER_BROWSER_ROUTE
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppDestination.USER_PROFILE_ROUTE
 import com.beleningalina.jetpackcomposepoc.ui.navigation.AppDestination.VOICE_RECORDER_ROUTE
 
@@ -22,6 +23,7 @@ object AppDestination {
     const val COUNTER_REMEMBER_COROUTINE_SCOPE_ROUTE = "counter_remember_coroutine_scope"
     const val VOICE_RECORDER_ROUTE = "voice_recorder_screen"
     const val PRODUCT_INFO_ROUTE = "product_info_route"
+    const val USER_BROWSER_ROUTE = "user_browser_route"
 }
 
 sealed class AppScreen(val title: String, val route: String) {
@@ -35,6 +37,7 @@ sealed class AppScreen(val title: String, val route: String) {
     object CounterRememberCoroutineScopeScreen: AppScreen("Counter: rememberCoroutineScope", COUNTER_REMEMBER_COROUTINE_SCOPE_ROUTE)
     object VoiceRecorderScreen: AppScreen("Voice Recorder: rememberUpdatedState", VOICE_RECORDER_ROUTE)
     object ProductInfoScreen: AppScreen("Product info: SideEffect", PRODUCT_INFO_ROUTE)
+    object UserBrowserScreen: AppScreen("User Browser: LaunchedEffect", USER_BROWSER_ROUTE)
 
     companion object {
         val screens = listOf(
@@ -46,7 +49,8 @@ sealed class AppScreen(val title: String, val route: String) {
             CounterViewModel2Screen,
             CounterRememberCoroutineScopeScreen,
             VoiceRecorderScreen,
-            ProductInfoScreen
+            ProductInfoScreen,
+            UserBrowserScreen
         )
     }
 }

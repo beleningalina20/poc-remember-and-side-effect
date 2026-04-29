@@ -30,7 +30,7 @@ fun CounterViewModel2Screen(viewModel: CounterViewModel2 = viewModel()) {
             .background(MaterialTheme.colorScheme.onPrimary)
             .padding(AppSpacing.medium)
     ) {
-        val (title, counterContent, infoCard) = createRefs()
+        val (title, content, infoCard) = createRefs()
 
         Text(
             text = AppScreen.CounterViewModel2Screen.title,
@@ -48,10 +48,9 @@ fun CounterViewModel2Screen(viewModel: CounterViewModel2 = viewModel()) {
                 }
         )
 
-        // Composable reutilizable
         Column(
             modifier = Modifier.fillMaxSize()
-                .constrainAs(counterContent) {
+                .constrainAs(content) {
                     top.linkTo(title.bottom)
                     bottom.linkTo(infoCard.top)
                     start.linkTo(parent.start)
@@ -69,9 +68,3 @@ fun CounterViewModel2Screen(viewModel: CounterViewModel2 = viewModel()) {
         }
     }
 }
-
-/*
-* El estado queda “pegado” al Composable
-No es testeable
-No es compartible
-* */
