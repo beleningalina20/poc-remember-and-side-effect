@@ -28,31 +28,3 @@ fun NavigationHost() {
         addFeedScreenGraph(navController)
     }
 }
-
-/*
------------------------
-@Composable
-fun Counter(
-    modifier: Modifier = Modifier,
-    lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
-    ) {
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            Log.d("Welcome message", "Lifecycle event: $event")
-        }
-
-        lifecycleOwner.lifecycle.addObserver(observer)
-        Log.d("Welcome message", "Observer registered")
-
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-            Log.d("Welcome message", "Observer unregistered")
-        }
-    }
-
-    Text(
-        modifier = modifier.fillMaxSize(),
-        textAlign = TextAlign.Center,
-        text = "Welcome to app"
-    )
-}*/

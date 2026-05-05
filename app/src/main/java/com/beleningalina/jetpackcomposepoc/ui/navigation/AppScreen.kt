@@ -36,6 +36,7 @@ sealed class AppScreen(val title: String, val route: String) {
     object VoiceRecorderScreen: AppScreen("Voice Recorder: rememberUpdatedState", VOICE_RECORDER_ROUTE)
     object ProductInfoScreen: AppScreen("Product info: SideEffect", PRODUCT_INFO_ROUTE)
     object UserBrowserScreen: AppScreen("User Browser: LaunchedEffect", USER_BROWSER_ROUTE)
+    object DisposableEffectScreen: AppScreen("DisposableEffect", "disposable_effect_screen")
 
     companion object {
         val screens = listOf(
@@ -46,7 +47,8 @@ sealed class AppScreen(val title: String, val route: String) {
             CounterRememberCoroutineScopeScreen,
             VoiceRecorderScreen,
             ProductInfoScreen,
-            UserBrowserScreen
+            UserBrowserScreen,
+            DisposableEffectScreen
         )
     }
 }
